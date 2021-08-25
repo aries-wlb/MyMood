@@ -5,21 +5,31 @@ import { StyleSheet, TextInput, View, SafeAreaView, Dimensions,Button,Text } fro
 import Mood from './src/page/Mood'
 
 function HomeScreen({ navigation }) {
-  const [value, onChangeText] = React.useState('86,80,,90,92,100,81');
+  const [mood, onMoodChange] = React.useState('86,80,,90,92,100,81');
+  const [name, onNameChange] = React.useState('李强');
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>
+        输入姓名
+      </Text>
+      <TextInput
+        style={{ height: 40, borderColor: 'gray', borderWidth: 1, minWidth: 200, marginBottom: 20 }}
+        onChangeText={text => onNameChange(text)}
+        value={name}
+      />
       <Text>
         输入历史心情指数,逗号分隔
       </Text>
       <TextInput
         style={{ height: 40, borderColor: 'gray', borderWidth: 1, minWidth: 200, marginBottom: 20 }}
-        onChangeText={text => onChangeText(text)}
-        value={value}
+        onChangeText={text => onMoodChange(text)}
+        value={mood}
       />
       <Button
         title="查看历史心情指数"
         onPress={() => navigation.navigate('Mood', {
-          moods:value
+          moods:mood,
+          name
         })}
       />
     </View>
@@ -36,7 +46,7 @@ function MoodScreen({ route }) {
     })
     
   }
-  const name = '李强'
+  const name = route.params.name || '李强'
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.layer}>
