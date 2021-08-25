@@ -2,7 +2,7 @@ import React, {Component, Fragment, useRef} from 'react';
 import LinearGradient from 'react-native-linear-gradient'
 import { StyleSheet, Text, View, Image,Animated, TouchableWithoutFeedback } from 'react-native'
 import { week } from '../constant/constant';
-const defaultHeight = 1.5
+const defaultHeight = 1.8
 const validateValue = (value) => {
   if(typeof value !== 'number' || value < 30) return defaultHeight * 30
   if(value > 100)return defaultHeight *100
@@ -248,14 +248,14 @@ export default class MyBar extends Component {
 const styles = StyleSheet.create({
   normalBar: {
     borderRadius: 50,
-    width: 25,
+    width: 30,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 8
+    marginBottom: 10
   },
   linerBar: {
-    width: 25,
+    width: 30,
     height: '100%',
     borderRadius:50,
     display: 'flex',
@@ -279,8 +279,8 @@ const styles = StyleSheet.create({
     bottom: 3
   },
   textBlock: {
-    width: 25,
-    height: 25,
+    width: 30,
+    height: 30,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

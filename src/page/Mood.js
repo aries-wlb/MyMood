@@ -19,7 +19,7 @@ export default class Mood extends Component {
       opacityAnim,
       {
         toValue: 1,
-        duration: 300,
+        duration: 1000,
         useNativeDriver: false,
       }
     ).start()
@@ -49,17 +49,20 @@ export default class Mood extends Component {
     })
     const avePoint = this.getAvePoint().toFixed(0)
     return (
-      <Animated.View style={[styles.Mood, {opacity: opacityAnim}]}>
-        <View style={styles.detailBlock}>
-          <Image source={require('../assets/eyes.jpg')} style={styles.avatarImg}></Image>
-          <Text>{name}</Text>
+      <Animated.View style={{position: 'relative',opacity: opacityAnim}}>
+        <View style={styles.Mood}>
+          <View style={styles.detailBlock}>
+            <Image source={require('../assets/eyes.jpg')} style={styles.avatarImg}></Image>
+            <Text>{name}</Text>
+          </View>
+          <Text style={{ fontSize: 50, fontWeight: 'bold' }}>{avePoint}</Text>
+          <Text style={{ color: 'rgb(146,146,146)' }}>周平均心情指数</Text>
+          <View style={styles.barsContainer}>
+            {bars}
+            <View style={styles.midLine}></View>
+          </View>
         </View>
-        <Text style={{ fontSize: 50, fontWeight: 'bold' }}>{avePoint}</Text>
-        <Text style={{ color: 'rgb(146,146,146)' }}>周平均心情指数</Text>
-        <View style={styles.barsContainer}>
-          {bars}
-          <View style={styles.midLine}></View>
-        </View>
+        <Animated.View style={[styles.shadowMask,{opacity: opacityAnim}]}></Animated.View>
       </Animated.View>
     )
   }
@@ -68,20 +71,41 @@ export default class Mood extends Component {
 const styles = StyleSheet.create({
   Mood: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    elevation: 30,
+    shadowColor: 'transparent',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: 'white',
+    position: 'relative',
+    marginTop: 10,
+  },
+  shadowMask: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    height: 80,
+    elevation: 15,
+    top: 10,
+    left: 10,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    width: Dimensions.get('window').width - 20,
   },
   barsContainer: {
-    height: 200,
+    height: 220,
     display: 'flex',
     flexDirection: 'row',
     position: 'relative',
     justifyContent: 'space-between',
-    width: Dimensions.get('window').width - 20,
+    width: Dimensions.get('window').width - 40,
     borderTopColor: 'rgb(242,242,242)',
     borderTopWidth: 1,
     marginTop: 10,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
+    
   },
   midLine: {
     position: 'absolute',

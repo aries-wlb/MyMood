@@ -63,7 +63,17 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" options={{ title: '首页' }} component={HomeScreen} />
-        <Stack.Screen name="Mood" options={{ title: '历史心情指数' }} component={MoodScreen} />
+        <Stack.Screen
+          name="Mood"
+          options={{
+            title: '历史心情指数',
+            headerStyle:{
+              borderBottomWidth: 0,
+              elevation: 0,
+            },
+            headerShadowVisible: false,
+        }}
+          component={MoodScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -72,11 +82,12 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    height: Dimensions.get('window').height
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width
   },
   layer: {
     display: 'flex',
-    flexDirection: 'row',
+    backgroundColor: 'white',
   }
 })
 
