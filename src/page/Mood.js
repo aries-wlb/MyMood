@@ -34,14 +34,16 @@ export default class Mood extends Component {
   getAvePoint () {
     if(!Array.isArray(this.state.moods))return 0
     const legalMap = this.state.moods.filter(item => typeof item === 'number')
-    return legalMap.reduce((total, current) => total + current) / legalMap.length
+    if(legalMap.length === 0)return 0
+    return legalMap.reduce((total, current) => total + current, 0) / legalMap.length
   }
   render() {
     const { name, moods, opacityAnim } = this.state
-    const bars = moods.map((item, i)=> {
+    const bars = Array.from({length: 7}).map((item, i)=> {
       let key = 'bar' + i
-      item = typeof item === 'number' ? item : undefined
-      return <MyBar key={key} value={item} barIdx={i}
+      let current = moods[i]
+      current = typeof current === 'number' ? current > 100 ? 100 : current < 0 ? 0 : current : undefined
+      return <MyBar key={key} value={current} barIdx={i}
         onPress={(ref) => this._onPress(ref)}
         ></MyBar>
     })
@@ -53,7 +55,7 @@ export default class Mood extends Component {
           <Text>{name}</Text>
         </View>
         <Text style={{ fontSize: 50, fontWeight: 'bold' }}>{avePoint}</Text>
-        <Text style={{ color: 'rgb(187,187,187)' }}>周平均心情指数</Text>
+        <Text style={{ color: 'rgb(146,146,146)' }}>周平均心情指数</Text>
         <View style={styles.barsContainer}>
           {bars}
           <View style={styles.midLine}></View>

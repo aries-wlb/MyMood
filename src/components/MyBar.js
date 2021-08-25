@@ -22,7 +22,7 @@ const points = {
   0: {
     color: 'black',
     img: require('../assets/unhappy.png'),
-    liner: ['rgb(53,219,113)', 'rgb(251,233,65)']
+    liner: ['black', 'grey']
   },
 }
 
@@ -30,7 +30,7 @@ export default class MyBar extends Component {
   constructor(props) {
     super(props)
     const { value, barIdx } = props
-    let point = value
+    let point = value || value === 0
       ? points[
           Object.keys(points).reduce((pre, cur) =>
             value >= Number(pre) && value < Number(cur) ? pre : cur,
