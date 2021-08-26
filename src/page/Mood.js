@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Dimensions, Animated, Image, StyleSheet, Text, View } from 'react-native'
-import MyBar from '../components/MyBar'
+import MyBar from '../components/MyBarH'
 
 export default class Mood extends Component {
   constructor(props){
@@ -25,11 +25,18 @@ export default class Mood extends Component {
     ).start()
   }
 
-  _onPress(ref) {
-    if(this.state.hightlineChild){
-      this.state.hightlineChild._cancelPress()
+  _onPress(cancelFunc, key) {
+    if(this.state.hightlineChild && this.state.hightlineChild.key && key !== this.state.hightlineChild.key){
+      this.state.hightlineChild.cancelFunc(false)
     }
-    this.state.hightlineChild = ref
+    this.state.hightlineChild = {
+      cancelFunc,
+      key
+    }
+    // if(this.state.hightlineChild){
+    //   this.state.hightlineChild._cancelPress()
+    // }
+    // this.state.hightlineChild = ref
   }
   getAvePoint () {
     if(!Array.isArray(this.state.moods))return 0
@@ -44,7 +51,7 @@ export default class Mood extends Component {
       let current = moods[i]
       current = typeof current === 'number' ? current > 100 ? 100 : current < 0 ? 0 : current : undefined
       return <MyBar key={key} value={current} barIdx={i}
-        onPress={(ref) => this._onPress(ref)}
+        onPress={(cancelFunc) => this._onPress(cancelFunc, key)}
         ></MyBar>
     })
     const avePoint = this.getAvePoint().toFixed(0)
